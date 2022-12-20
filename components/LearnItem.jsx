@@ -5,14 +5,16 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 
 
-export const NewPost = ({ title, image, description}) => {
+export const NewLearnItem = ({ title, image, description}) => {
   return (
     <View style={styles.container}>
         <Image 
         style={styles.card_image} 
         source={{uri: image}}/>
-        <Text style={styles.h1}>{title}</Text>
-        <Text>{description}</Text>
+        <View style={{ flex: 1 }}>
+            <Text style={styles.h1}>{title}</Text>
+            <Text style={styles.description_p} numberOfLines={8}>{description}</Text>
+        </View>
     </View>
   );
 }
@@ -20,11 +22,8 @@ export const NewPost = ({ title, image, description}) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#fff',
-    width: '90%',
-    height: 400,
+    height: 500,
     borderRadius: 15,
-    marginBottom: 15,
-    marginTop: 15,
     shadowColor: "#000",
     shadowOffset: {
         width: 5,
@@ -32,16 +31,23 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.4,
     shadowRadius: 5,
+    padding: 10,
+    flexDirection: 'space-between',
+    flex: 1
   },
   h1: {
     fontWeight: '800',
     fontSize: 20,
-    margin: 5
+    marginBottom: 5
   },
   card_image: {
     width: '100%',
-    height: '70%',
+    height: '60%',
     borderTopRightRadius: 15,
-    borderTopLeftRadius: 15
+    borderTopLeftRadius: 15,
+    flex: 2
+  },
+  description_p: {
+    textAlign: 'justify'
   }
 });
