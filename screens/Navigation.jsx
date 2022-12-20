@@ -19,7 +19,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { HomeScreen } from './Home';
 import { EducationScreen } from './Learns';
 import { FavoritesScreen } from './Favorites';
-import { ProfileScreen } from '../components/Profile';
+import { ProfileScreen } from './Profile';
 import React, { useState } from 'react';
 import { StackView } from '@react-navigation/stack';
 import { FullNew } from './FullNew';

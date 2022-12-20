@@ -3,7 +3,7 @@ import React from "react";
 import { View, Text, Image } from "react-native";
 import { Loading } from "../components/Loading";
 
-export const FullNew = () => {
+export const FullNew = ({ navigation, route }) => {
     const [data, setData] = React.useState();
     const [isLoading, setIsLoading] = React.useState(true);
 
@@ -22,12 +22,12 @@ export const FullNew = () => {
     }, []);
 
     if (isLoading) {
-        return <Loading/>
+        return <Loading />
     }
 
     return (
         <View>
-            <Image source={{uri: data.image}}/>
+            <Image source={{ uri: data.image }} />
             <Text>{data.title}</Text>
             <Text>{data.description}</Text>
         </View>

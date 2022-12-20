@@ -7,7 +7,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 export const NewPost = ({ title, image, description }) => {
     return (
-        <View style={styles.container}>
+        <View style={styles.container} >
             <Image
                 style={styles.card_image}
                 source={{ uri: image }} />
