@@ -19,6 +19,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { NewPost } from '../components/News';
 import axios from 'axios';
 import React, { useState } from 'react';
+import { Loading } from '../components/Loading';
 
 export const EducationScreen = ({ navigation }) => {
     const [items, setItems] = React.useState();
@@ -42,16 +43,7 @@ export const EducationScreen = ({ navigation }) => {
     React.useEffect(fetchPosts, []);
 
     if (isLoading) {
-        return (
-            <View style={{
-                flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center'
-            }}>
-                <ActivityIndicator size='large' />
-                <Text style={{ marginTop: 20, fontWeight: '600' }}>Загрузка новостей...</Text>
-            </View>
-        )
+        return <Loading/>;
     }
 
     return (
