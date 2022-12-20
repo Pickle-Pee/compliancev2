@@ -5,14 +5,14 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 
 
-export const NewPost = () => {
+export const NewPost = ({ title, image, description}) => {
   return (
     <View style={styles.container}>
         <Image 
         style={styles.card_image} 
-        source={{uri: 'https://icdn.lenta.ru/images/2021/04/27/16/20210427163138131/square_320_c09ebae17387b7d6eeb9fa0d42afe5ee.jpg'}}/>
-        <Text style={styles.h1}>Новость</Text>
-        <Text>Текст новости</Text>
+        source={{uri: image}}/>
+        <Text style={styles.h1}>{title}</Text>
+        <Text>{description}</Text>
     </View>
   );
 }

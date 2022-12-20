@@ -4,20 +4,35 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import { NewPost } from './components/MainScreen'
+import axios from 'axios'
+import React from 'react';
 
 
 function HomeScreen({ navigation }) {
+  const [items, setItems] = React.useState();
+
+  React.useEffect(() => {
+    axios
+    .get('https://63a0636424d74f9fe836ccd4.mockapi.io/news/test')
+    .then(({ data }) => {
+      setItems(data);
+    })
+    .catch(err => {
+      console.log(err);
+      alert('ошибка');
+    });
+  }, []);
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView>
-        <NewPost/>
-        <NewPost/>
-        <NewPost/>
-        <NewPost/>
-        <NewPost/>
-        <NewPost/>
-        <NewPost/>
-      </ScrollView>
+      <StackView>
+        {items.map((obj) => (
+          <NewPost
+          image={obj.image}
+          title={obj.title}
+          description={obj.description}
+          />
+        ))}
+      </StackView>
     </SafeAreaView>
   );
 }
