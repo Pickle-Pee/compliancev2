@@ -40,7 +40,7 @@ export const Navigation = () => {
 
                         if (route.name === 'Новости') {
                             iconName = focused ? 'home' : 'home-outline';
-                        } else if (route.name === 'Каталог') {
+                        } else if (route.name === 'Курсы') {
                             iconName = focused ? 'book' : 'book-outline';
                         } else if (route.name === 'Избранное') {
                             iconName = focused ? 'star' : 'star-outline';
@@ -56,11 +56,18 @@ export const Navigation = () => {
                     tabBarInactiveTintColor: 'gray',
                 })}
             >
-                <Tab.Screen name="Новости" component={HomeScreen} />
-                <Tab.Screen name="Каталог" component={EducationScreen} />
+                <Tab.Screen name="Новости" component={HomeScreen}/>
+                <Tab.Screen name="Курсы" component={EducationScreen} />
                 <Tab.Screen name="Избранное" component={FavoritesScreen} />
-                <Tab.Screen name="Профиль" component={ProfileScreen} />
-                {/* <Tab.Screen name="Настройки" component={SettingsScreen} />  */}
+                <Tab.Screen 
+                name="Профиль" 
+                component={ProfileScreen}
+                options={{
+                    headerRight: () => (
+                        <Button 
+                        title="Настройки" 
+                        component={HomeScreen} 
+                        /> )}} />
             </Tab.Navigator>
         </NavigationContainer>
     )
