@@ -1,0 +1,25 @@
+version: '2.4'
+
+services:
+  react_native_app:
+    build:
+      context: .
+      args:
+        - NODE_ENV=development
+    environment:
+      - NODE_ENV=development
+    tty: true
+    ports:
+      - '19006:19006'
+      - '19001:19001'
+      - '19002:19002'
+    volumes:
+      - /Users/berizaryad62/Desktop/Compliance12:/Users/berizaryad62/Desktop/Compliance12/app:delegated
+      - /Users/berizaryad62/Desktop/Compliance12/package.json
+      - /Users/berizaryad62/Desktop/Compliance12/package-lock.json
+      - notused:/Users/berizaryad62/Desktop/Compliance12/app/node_modules
+    healthcheck:
+      disable: true
+
+volumes:
+  notused:
