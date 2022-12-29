@@ -11,7 +11,7 @@ import {
     RefreshControl,
     TouchableOpacity,
     ActivityIndicator
-  } from 'react-native';
+} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -26,51 +26,51 @@ import { FullNew } from './FullNew';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
+const TabStack = () => {
+    return (
+        <Tab.Navigator
+            screenOptions={({ route }) => ({
+                tabBarIcon: ({ focused, color, size }) => {
+                    let iconName;
+
+                    if (route.name === 'Новости') {
+                        iconName = focused ? 'home' : 'home-outline';
+                    } else if (route.name === 'Курсы') {
+                        iconName = focused ? 'book' : 'book-outline';
+                    } else if (route.name === 'Избранное') {
+                        iconName = focused ? 'star' : 'star-outline';
+                    } else if (route.name === 'Профиль') {
+                        iconName = focused ? 'person-circle' : 'person-circle-outline';
+                    } else if (route.name === 'Настройки') {
+                        iconName = focused ? 'cog' : 'cog-outline';
+                    }
+                    // You can return any component that you like here!
+                    return <Ionicons name={iconName} size={size} color={color} />;
+                },
+                tabBarActiveTintColor: '#E32636',
+                tabBarInactiveTintColor: 'gray',
+            })}
+        >
+            <Tab.Screen name="Новости" component={HomeScreen} />
+            <Tab.Screen name="Курсы" component={EducationScreen} />
+            <Tab.Screen name="Избранное" component={FavoritesScreen} />
+            <Tab.Screen name="Профиль" component={ProfileScreen} />
+        </Tab.Navigator>
+    )
+}
 
 export const Navigation = () => {
     return (
         <NavigationContainer>
-            {/* <Stack.Navigator>
-                <Stack.Screen name='FullNew' component={FullNew}/>
-            </Stack.Navigator> */}
-            <Tab.Navigator
-                screenOptions={({ route }) => ({
-                    tabBarIcon: ({ focused, color, size }) => {
-                        let iconName;
+            <Stack.Navigator
+            screenOptions={{
+                headerShown: false,
+            }}>
+                <Stack.Screen name='Tab' component={TabStack} />
+                <Stack.Screen name='FullNew' component={FullNew} />
 
-                        if (route.name === 'Новости') {
-                            iconName = focused ? 'home' : 'home-outline';
-                        } else if (route.name === 'Курсы') {
-                            iconName = focused ? 'book' : 'book-outline';
-                        } else if (route.name === 'Избранное') {
-                            iconName = focused ? 'star' : 'star-outline';
-                        } else if (route.name === 'Профиль') {
-                            iconName = focused ? 'person-circle' : 'person-circle-outline';
-                        } else if (route.name === 'Настройки') {
-                            iconName = focused ? 'cog' : 'cog-outline';
-                        }
-                        // You can return any component that you like here!
-                        return <Ionicons name={iconName} size={size} color={color} />;
-                    },
-                    tabBarActiveTintColor: '#E32636',
-                    tabBarInactiveTintColor: 'gray',
-                })}
-            >
-                <Tab.Screen name="Новости" component={HomeScreen}/>
-                <Tab.Screen name="Курсы" component={EducationScreen} />
-                <Tab.Screen name="Избранное" component={FavoritesScreen} />
-                <Tab.Screen 
-                name="Профиль" 
-                component={ProfileScreen}
-                options={{
-                    headerRight: () => (
-                        <Ionicons 
-                        name='cog-outline'
-                        component={HomeScreen}
-                        style={{ fontSize: 35, marginRight: 10 }}
-                        /> )}
-                        } />
-            </Tab.Navigator>
+            </Stack.Navigator>
+
         </NavigationContainer>
     )
 };
