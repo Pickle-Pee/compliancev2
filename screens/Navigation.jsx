@@ -1,17 +1,4 @@
-import {
-    StyleSheet,
-    Text,
-    TextInput,
-    FlatList,
-    StatusBar,
-    View,
-    Button,
-    SafeAreaView,
-    ScrollView,
-    RefreshControl,
-    TouchableOpacity,
-    ActivityIndicator
-} from 'react-native';
+import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -20,9 +7,8 @@ import { HomeScreen } from './Home';
 import { EducationScreen } from './Learns';
 import { FavoritesScreen } from './Favorites';
 import { ProfileScreen } from './Profile';
-import React, { useState } from 'react';
-import { StackView } from '@react-navigation/stack';
-import { FullNew } from './FullNew';
+import React from 'react';
+import { FullNewScreen } from './FullNew';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -63,11 +49,11 @@ export const Navigation = () => {
     return (
         <NavigationContainer>
             <Stack.Navigator
-            screenOptions={{
-                headerShown: false,
-            }}>
+                screenOptions={{
+                    headerShown: false,
+                }}>
                 <Stack.Screen name='Tab' component={TabStack} />
-                <Stack.Screen name='FullNew' component={FullNew} />
+                <Stack.Screen name='FullNew' component={FullNewScreen} />
 
             </Stack.Navigator>
 

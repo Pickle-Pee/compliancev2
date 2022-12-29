@@ -59,7 +59,7 @@ export const HomeScreen = ({ navigation }) => {
         data={items}
         renderItem={({ item }) => (
           <TouchableOpacity 
-          onPress={() => navigation.navigate('FullNew')}>
+          onPress={() => navigation.navigate('FullNew', {id: item.id, image: item.image, description: item.description})}>
             <NewPost
               image={item.image}
               title={item.title}
