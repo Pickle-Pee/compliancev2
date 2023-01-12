@@ -15,12 +15,37 @@ import {
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Ionicons } from '@expo/vector-icons';
+// import { useNavigation } from 'react-navigation-hooks';
 import { NewPost } from '../components/News';
 import axios from 'axios';
 import React, { useState } from 'react';
 import { Loading } from '../components/Loading';
 import { DarkTheme } from 'react-native-paper';
+
+
+// export const ArticleList = () => {
+//   const [articles, setArticles] = useState([]);
+//   const { navigate } = useNavigation();
+
+//   // Получение данных статей из API
+//   useEffect(() => {
+//     fetch('https://63a0636424d74f9fe836ccd4.mockapi.io/news/test')
+//       .then(response => response.json())
+//       .then(data => setArticles(data));
+//   }, []);
+
+//   return (
+//     <FlatList
+//       data={articles}
+//       renderItem={({ item }) => (
+//         <View>
+//           <Text onPress={() => navigate('Article', { articleId: item.id })}>{item.title}</Text>
+//         </View>
+//       )}
+//       keyExtractor={item => item.id}
+//     />
+//   );
+// };
 
 
 export const HomeScreen = ({ navigation }) => {

@@ -28,7 +28,7 @@ export const FullNewScreen = ({ navigation, route }) => {
             });
     }, []);
 
-    console.log(data.image)
+    // console.log(data.image)
 
     if (isLoading) {
         return <Loading />
