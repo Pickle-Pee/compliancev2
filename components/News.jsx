@@ -17,7 +17,7 @@ export const NewPost = ({ title, image, description }) => {
                 source={{ uri: image }} />
             <View style={{ flex: 1 }}>
                 <Text style={styles.h1}>{title}</Text>
-                <Text style={styles.description_p} numberOfLines={4}>{description}</Text>
+                <Text style={styles.description_p} numberOfLines={5}>{description}</Text>
             </View>
         </View>
     );
@@ -26,7 +26,7 @@ export const NewPost = ({ title, image, description }) => {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#fff',
-        height: 500,
+        height: 300,
         borderRadius: 15,
         shadowColor: "#000",
         shadowOffset: {
@@ -41,17 +41,16 @@ const styles = StyleSheet.create({
     h1: {
         fontWeight: '800',
         fontSize: 20,
-        margin: 5
+        margin: 10
     },
     card_image: {
         width: '100%',
-        height: '60%',
+        height: '50%',
         borderTopRightRadius: 15,
         borderTopLeftRadius: 15,
-        flex: 3
     },
     description_p: {
         textAlign: 'justify',
-        margin: 10
+        marginHorizontal: 10
     }
 });

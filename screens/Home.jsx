@@ -12,18 +12,13 @@ import {
   TouchableOpacity,
   ActivityIndicator
 } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-// import { useNavigation } from 'react-navigation-hooks';
 import { NewPost } from '../components/News';
 import axios from 'axios';
 import React, { useState } from 'react';
 import { Loading } from '../components/Loading';
-import { DarkTheme } from 'react-native-paper';
 
 
-// export const ArticleList = () => {
+// export const HomeScreen = ({ navigation }) => {
 //   const [articles, setArticles] = useState([]);
 //   const { navigate } = useNavigation();
 
@@ -35,7 +30,9 @@ import { DarkTheme } from 'react-native-paper';
 //   }, []);
 
 //   return (
+//     <NavigationContext>
 //     <FlatList
+//       style={styles.container}
 //       data={articles}
 //       renderItem={({ item }) => (
 //         <View>
@@ -44,6 +41,7 @@ import { DarkTheme } from 'react-native-paper';
 //       )}
 //       keyExtractor={item => item.id}
 //     />
+//     </NavigationContext>
 //   );
 // };
 
@@ -75,7 +73,7 @@ export const HomeScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      
+
       <FlatList
         refreshControl={
           <RefreshControl refreshing={isLoading} onRefresh={fetchPosts} />
@@ -83,13 +81,13 @@ export const HomeScreen = ({ navigation }) => {
         style={styles.postList}
         data={items}
         renderItem={({ item }) => (
-          <TouchableOpacity 
-          onPress={() => navigation.navigate('FullNew', {id: item.id, image: item.image, description: item.description})}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('FullNew', { id: item.id, image: item.image, description: item.description })}>
             <NewPost
               image={item.image}
               title={item.title}
               description={item.description}
-               />
+            />
           </TouchableOpacity>
         )}
       >
