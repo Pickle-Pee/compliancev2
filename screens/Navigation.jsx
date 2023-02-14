@@ -9,9 +9,27 @@ import { FavoritesScreen } from './Favorites';
 import { ProfileScreen } from './Profile';
 import React from 'react';
 import { FullNewScreen } from './FullNew';
+import { createStackNavigator } from '@react-navigation/stack';
+import { AuthScreen } from './AuthScreen';
+import { createAppContainer } from 'react-navigation';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
+
+// const AuthStack = createStackNavigator({
+//     Login: {
+//         screen: AuthScreen
+//     }
+// });
+
+// const AppStack = createStackNavigator({
+//     Home: {
+//         screen: HomeScreen
+//     }
+// });
+
+// const AppNavigator = createAppContainer(isUserLoggedIn ? AppStack : AuthStack);
+
 const TabStack = () => {
     return (
         <Tab.Navigator
