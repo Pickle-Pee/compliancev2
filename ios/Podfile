@@ -9,7 +9,7 @@ platform :ios, podfile_properties['ios.deploymentTarget'] || '13.0'
 install! 'cocoapods',
   :deterministic_uuids => false
 
-target 'Compliance12' do
+target 'Smart Compliance' do
   use_expo_modules!
   config = use_native_modules!
 
@@ -29,6 +29,8 @@ target 'Compliance12' do
     # Note that if you have use_frameworks! enabled, Flipper will not work
     # :flipper_configuration => !ENV['CI'] ? FlipperConfiguration.enabled : FlipperConfiguration.disabled,
   )
+  use_frameworks! :linkage => :static
+  $RNFirebaseAsStaticFramework = true
 
   post_install do |installer|
     react_native_post_install(

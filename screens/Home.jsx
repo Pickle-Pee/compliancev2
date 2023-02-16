@@ -1,16 +1,9 @@
 import {
   StyleSheet,
-  Text,
-  TextInput,
   FlatList,
-  StatusBar,
   View,
-  Button,
-  SafeAreaView,
-  ScrollView,
   RefreshControl,
   TouchableOpacity,
-  ActivityIndicator
 } from 'react-native';
 import { NewPost } from '../components/News';
 import axios from 'axios';

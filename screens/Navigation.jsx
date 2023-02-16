@@ -9,9 +9,7 @@ import { FavoritesScreen } from './Favorites';
 import { ProfileScreen } from './Profile';
 import React from 'react';
 import { FullNewScreen } from './FullNew';
-import { createStackNavigator } from '@react-navigation/stack';
-import { AuthScreen } from './AuthScreen';
-import { createAppContainer } from 'react-navigation';
+
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -48,7 +46,6 @@ const TabStack = () => {
                     } else if (route.name === 'Настройки') {
                         iconName = focused ? 'cog' : 'cog-outline';
                     }
-                    // You can return any component that you like here!
                     return <Ionicons name={iconName} size={size} color={color} />;
                 },
                 tabBarActiveTintColor: '#E32636',

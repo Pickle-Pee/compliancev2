@@ -1,83 +1,124 @@
 import React, { useState } from 'react';
-import { View, TextInput, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import {
+    View,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    StyleSheet,
+    Image
+} from 'react-native';
 
-export const AuthScreen = () => {
+const LoginScreen = ({ navigation }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleSubmit = () => {
-        // Send request to server to authenticate user
-        fetch('https://your-server.com/api/auth', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                email,
-                password
-            }),
-        })
-            .then(res => res.json())
-            .then(data => {
-                // Handle success/failure response from server
-                if (data.error) {
-                    // Show error message
-                } else {
-                    // Store JWT token and user data in AsyncStorage/redux
-                }
-            });
-    }
+    const handleLogin = () => {
+        // Ваша логика авторизации
+    };
+
+    const handleRegistration = () => {
+
+    };
+
+    const logo = require('../resources/images/logo.png')
 
     return (
         <View style={styles.container}>
-            <TextInput
-                placeholder="Введите почту"
-                placeholderTextColor={'#000'}
-                onChangeText={text => setEmail(text)}
-                value={email}
-                style={styles.textInput}
-            />
-            <TextInput
-                placeholder="Введите пароль"
-                placeholderTextColor={'#000'}
-                onChangeText={text => setPassword(text)}
-                value={password}
-                secureTextEntry={true}
-                style={styles.textInput}
-            />
-            <TouchableOpacity 
-            onPress={handleSubmit}
-            style={styles.submitButton}>
-                <Text>Submit</Text>
-            </TouchableOpacity>
+            <Image
+                source={logo}
+                style={styles.logo}
+                resizeMode="contain" />
+                <View style={styles.inputView}>
+                    <TextInput
+                        style={styles.inputText}
+                        placeholder="Email"
+                        placeholderTextColor="#003f5c"
+                        value={email}
+                        onChangeText={(text) => setEmail(text)}
+                    />
+                </View>
+                <View style={styles.inputView}>
+                    <TextInput
+                        style={styles.inputText}
+                        placeholder="Пароль"
+                        placeholderTextColor="#003f5c"
+                        secureTextEntry={true}
+                        value={password}
+                        onChangeText={(text) => setPassword(text)}
+                    />
+                </View>
+                <TouchableOpacity style={styles.loginBtn} onPress={handleLogin}>
+                    <Text style={styles.loginText}>Вход</Text>
+                </TouchableOpacity>
+                <TouchableOpacity 
+                style={styles.regBtn}>
+                    <Text 
+                    style={styles.regText}>
+                        Регистрация</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.resetPass}>
+                    <Text>Не получается войти?</Text>
+                </TouchableOpacity>
         </View>
-    )
+    );
 };
 
 const styles = StyleSheet.create({
     container: {
-        display: 'flex',
-        alignContent: 'center',
+        flex: 1,
+        backgroundColor: '#fff',
         alignItems: 'center',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        backgroundColor: '#333333'
+        justifyContent: 'center',
     },
-    textInput: {
-        width: 300,
-        height: 50,
-        margin: 12,
-        backgroundColor: '#fff',
-        borderRadius: 15,
-        padding: 10,
-    },
-    submitButton: {
-        backgroundColor: '#fff',
+    logo: {
         width: 100,
+        height: 100,
+        marginBottom: '20%'
+    },
+    inputView: {
+        width: '80%',
+        backgroundColor: '#fff',
+        borderRadius: 25,
+        borderWidth: 1,
+        borderColor: '#F31B31',
         height: 50,
-        borderRadius: 30,
-        display: 'flex',
+        marginBottom: 20,
+        justifyContent: 'center',
+        padding: 20,
+    },
+    inputText: {
+        height: 50,
+        color: 'black',
+    },
+    loginBtn: {
+        width: '80%',
+        backgroundColor: '#FFF',
+        borderRadius: 25,
+        height: 50,
+        borderWidth: 2,
+        borderColor: '#F31B31',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        marginTop: 40,
+        marginBottom: 10,
+    },
+    regBtn: {
+        width: '80%',
+        backgroundColor: '#F31B31',
+        borderRadius: 25,
+        height: 50,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: 10,
+    },
+    loginText: {
+        color: '#F31B31',
+        fontWeight: '700'
+    },
+    regText: {
+        color: 'white',
+        fontWeight: '700'
     }
-})
+});
+
+export default LoginScreen;

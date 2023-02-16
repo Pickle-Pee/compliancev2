@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Compliance12",
-    "slug": "Compliance12",
+    "name": "Smart Compliance",
+    "slug": "smartcompliance",
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
@@ -10,6 +10,9 @@
       "eas": {
         "projectId": "7b7c158d-e046-4ea9-9e76-aa5e7f52fec6"
       }
+    },
+    "ios": {
+      "bundleIdentifier": "smartcompliance"
     }
   }
 }

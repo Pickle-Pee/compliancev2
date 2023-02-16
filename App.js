@@ -6,18 +6,19 @@ import {
 } from 'react-native';
 import { Navigation } from './screens/Navigation';
 import React, { useState } from 'react';
-import { AuthScreen } from './screens/AuthScreen';
+import LoginScreen from './screens/AuthScreen';
 
 const App = () => {
 
-  const [isLoggedIn, setLoggedIn] = useState(true);
+  const [isLoggedIn, setLoggedIn] = useState(false);
+  
 
   return (
     <View style={styles.container}>
       {isLoggedIn ? (
         <Navigation />
       ) : (
-        <AuthScreen />
+        <LoginScreen />
       )}
     </View>
   );
@@ -26,9 +27,7 @@ const App = () => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#333",
-    alignItems: 'center',
-    display: 'flex',
+    height: '100%',
     justifyContent: 'center'
   }
 });
