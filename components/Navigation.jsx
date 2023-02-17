@@ -1,5 +1,4 @@
 import { StyleSheet } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
@@ -10,6 +9,7 @@ import { ProfileScreen } from '../screens/ProfileScreen';
 import React from 'react';
 import { FullNewScreen } from '../screens/FullNewScreen';
 import AuthScreen from '../screens/AuthScreen';
+import RegisterScreen from '../screens/RegistrationScreen';
 
 
 const Tab = createBottomTabNavigator();
@@ -64,6 +64,7 @@ export const Navigation = () => {
                 <Stack.Screen name='Tab' component={TabStack} />
                 <Stack.Screen name='FullNew' component={FullNewScreen} />
                 <Stack.Screen name='AuthScreen' component={AuthScreen} />
+                <Stack.Screen name='Registration' component={RegisterScreen} />
             </Stack.Navigator>
     )
 };

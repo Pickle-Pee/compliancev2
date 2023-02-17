@@ -5,11 +5,13 @@ import {
     TextInput,
     TouchableOpacity,
     StyleSheet,
-    Image
+    Image,
+    Keyboard
 } from 'react-native';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import firebase from '../firebase';
 
-export default function LoginScreen({ navigation, route }) {
+export default function AuthScreen({ navigation }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -24,46 +26,59 @@ export default function LoginScreen({ navigation, route }) {
           });
       };
 
+    const handlePress = () => {
+        Keyboard.dismiss()
+    }
+
+
     const logo = require('../resources/images/logo.png')
 
+    const goReg = () => {
+        console.log('Pressed');
+        navigation.navigate('Registration');
+      };
+
     return (
-        <View style={styles.container}>
-            <Image
-                source={logo}
-                style={styles.logo}
-                resizeMode="contain" />
-                <View style={styles.inputView}>
-                    <TextInput
-                        style={styles.inputText}
-                        placeholder="Email"
-                        placeholderTextColor="#003f5c"
-                        value={email}
-                        onChangeText={(text) => setEmail(text)}
-                    />
-                </View>
-                <View style={styles.inputView}>
-                    <TextInput
-                        style={styles.inputText}
-                        placeholder="Пароль"
-                        placeholderTextColor="#003f5c"
-                        secureTextEntry={true}
-                        value={password}
-                        onChangeText={(text) => setPassword(text)}
-                    />
-                </View>
-                <TouchableOpacity style={styles.loginBtn} onPress={handleLogin}>
-                    <Text style={styles.loginText}>Вход</Text>
-                </TouchableOpacity>
-                <TouchableOpacity 
-                style={styles.regBtn}>
-                    <Text 
-                    style={styles.regText}>
-                        Регистрация</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.resetPass}>
-                    <Text>Не получается войти?</Text>
-                </TouchableOpacity>
-        </View>
+        // <TouchableWithoutFeedback onPress={handlePress} style={styles.mainCont}>
+            <View style={styles.container}>
+                <Image
+                    source={logo}
+                    style={styles.logo}
+                    resizeMode="contain" />
+                    <View style={styles.inputView}>
+                        <TextInput
+                            style={styles.inputText}
+                            placeholder="Email"
+                            placeholderTextColor="#003f5c"
+                            value={email}
+                            onChangeText={(text) => setEmail(text)}
+                        />
+                    </View>
+                    <View style={styles.inputView}>
+                        <TextInput
+                            style={styles.inputText}
+                            placeholder="Пароль"
+                            placeholderTextColor="#003f5c"
+                            secureTextEntry={true}
+                            value={password}
+                            onChangeText={(text) => setPassword(text)}
+                        />
+                    </View>
+                    <TouchableOpacity style={styles.loginBtn} onPress={handleLogin}>
+                        <Text style={styles.loginText}>Вход</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity 
+                    style={styles.regBtn}
+                    onPress={goReg}>
+                        <Text 
+                        style={styles.regText}>
+                            Регистрация</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.resetPass}>
+                        <Text>Не получается войти?</Text>
+                    </TouchableOpacity>
+            </View>
+        // </TouchableWithoutFeedback>
     );
 };
 
