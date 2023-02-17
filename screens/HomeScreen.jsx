@@ -7,8 +7,9 @@ import {
 } from 'react-native';
 import { NewPost } from '../components/News';
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Loading } from '../components/Loading';
+import firebase from '../firebase';
 
 
 // export const HomeScreen = ({ navigation }) => {
@@ -56,7 +57,16 @@ export const HomeScreen = ({ navigation }) => {
       }).finally(() => {
         setIsLoading(false);
       });
-  }
+  };
+
+  useEffect(() => {
+    const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
+      if (!user) {
+        navigation.navigate('AuthScreen');
+      }
+    });
+    return unsubscribe;
+  }, []);
 
   React.useEffect(fetchPosts, []);
 

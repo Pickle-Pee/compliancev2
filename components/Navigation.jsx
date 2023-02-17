@@ -3,22 +3,17 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
-import { HomeScreen } from './Home';
-import { EducationScreen } from './Learns';
-import { FavoritesScreen } from './Favorites';
-import { ProfileScreen } from './Profile';
+import { HomeScreen } from '../screens/HomeScreen';
+import { EducationScreen } from '../screens/LearnsScreen';
+import { FavoritesScreen } from '../screens/FavoritesScreen';
+import { ProfileScreen } from '../screens/ProfileScreen';
 import React from 'react';
-import { FullNewScreen } from './FullNew';
+import { FullNewScreen } from '../screens/FullNewScreen';
+import AuthScreen from '../screens/AuthScreen';
 
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
-
-// const AuthStack = createStackNavigator({
-//     Login: {
-//         screen: AuthScreen
-//     }
-// });
 
 // const AppStack = createStackNavigator({
 //     Home: {
@@ -62,17 +57,14 @@ const TabStack = () => {
 
 export const Navigation = () => {
     return (
-        <NavigationContainer>
             <Stack.Navigator
                 screenOptions={{
                     headerShown: false,
                 }}>
                 <Stack.Screen name='Tab' component={TabStack} />
                 <Stack.Screen name='FullNew' component={FullNewScreen} />
-
+                <Stack.Screen name='AuthScreen' component={AuthScreen} />
             </Stack.Navigator>
-
-        </NavigationContainer>
     )
 };
 

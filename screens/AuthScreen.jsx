@@ -7,18 +7,22 @@ import {
     StyleSheet,
     Image
 } from 'react-native';
+import firebase from '../firebase';
 
-const LoginScreen = ({ navigation }) => {
+export default function LoginScreen({ navigation, route }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const handleLogin = () => {
-        // Ваша логика авторизации
-    };
-
-    const handleRegistration = () => {
-
-    };
+        firebase.auth().signInWithEmailAndPassword(email, password)
+          .then(() => {
+            console.log('Login successful');
+            navigation.navigate('Tab');
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      };
 
     const logo = require('../resources/images/logo.png')
 
@@ -79,8 +83,8 @@ const styles = StyleSheet.create({
         width: '80%',
         backgroundColor: '#fff',
         borderRadius: 25,
-        borderWidth: 1,
-        borderColor: '#F31B31',
+        borderWidth: '1,5',
+        borderColor: '#B30E1F',
         height: 50,
         marginBottom: 20,
         justifyContent: 'center',
@@ -96,7 +100,7 @@ const styles = StyleSheet.create({
         borderRadius: 25,
         height: 50,
         borderWidth: 2,
-        borderColor: '#F31B31',
+        borderColor: '#B30E1F',
         alignItems: 'center',
         justifyContent: 'center',
         marginTop: 40,
@@ -104,7 +108,7 @@ const styles = StyleSheet.create({
     },
     regBtn: {
         width: '80%',
-        backgroundColor: '#F31B31',
+        backgroundColor: '#B30E1F',
         borderRadius: 25,
         height: 50,
         alignItems: 'center',
@@ -112,7 +116,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     loginText: {
-        color: '#F31B31',
+        color: '#B30E1F',
         fontWeight: '700'
     },
     regText: {
@@ -120,5 +124,3 @@ const styles = StyleSheet.create({
         fontWeight: '700'
     }
 });
-
-export default LoginScreen;

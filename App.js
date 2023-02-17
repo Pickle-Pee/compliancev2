@@ -1,26 +1,20 @@
 
-import { 
+import {
   View,
   StyleSheet,
   StatusBar
 } from 'react-native';
-import { Navigation } from './screens/Navigation';
+import { NavigationContainer } from '@react-navigation/native';
+import { Navigation } from './components/Navigation';
 import React, { useState } from 'react';
 import LoginScreen from './screens/AuthScreen';
 
-const App = () => {
-
-  const [isLoggedIn, setLoggedIn] = useState(false);
-  
+function App() {
 
   return (
-    <View style={styles.container}>
-      {isLoggedIn ? (
-        <Navigation />
-      ) : (
-        <LoginScreen />
-      )}
-    </View>
+    <NavigationContainer>
+      <Navigation />
+    </NavigationContainer>
   );
 };
 
