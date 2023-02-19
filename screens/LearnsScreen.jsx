@@ -1,65 +1,51 @@
 import {
     StyleSheet,
-    Text,
-    TextInput,
     FlatList,
-    StatusBar,
     View,
-    Button,
-    SafeAreaView,
-    ScrollView,
-    RefreshControl,
     TouchableOpacity,
-    ActivityIndicator
 } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Ionicons } from '@expo/vector-icons';
-import { NewPost } from '../components/News';
+import { Recomendations } from '../components/Recomendations';
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { Loading } from '../components/Loading';
 
 export const EducationScreen = ({ navigation }) => {
-    const [items, setItems] = React.useState();
     const [isLoading, setIsLoading] = React.useState(true);
+    const [recomendationData, setRecomendationData] = React.useState([]);
 
-    const fetchPosts = () => {
-        setIsLoading(true);
-        axios
-            .get('https://63a0636424d74f9fe836ccd4.mockapi.io/news/test')
-            .then(({ data }) => {
-                setItems(data);
+    useEffect(() => {
+        Promise.all([
+            axios.get('https://63a0636424d74f9fe836ccd4.mockapi.io/news/recomendation')
+        ])
+            .then((response) => {
+                const recomendationData = response[0].data;
+                setRecomendationData(recomendationData);
             })
-            .catch((err) => {
-                console.log(err);
-                alert(err);
-            }).finally(() => {
+            .catch((error) => {
+                console.log(error);
+                alert(error);
+            })
+            .finally(() => {
                 setIsLoading(false);
             });
-    }
-
-    React.useEffect(fetchPosts, []);
+    }, []);
 
     if (isLoading) {
-        return <Loading/>;
+        return <Loading />;
     }
 
     return (
         <View style={styles.container}>
             <FlatList
-                refreshControl={
-                    <RefreshControl refreshing={isLoading} onRefresh={fetchPosts} />
-                }
                 style={styles.postList}
-                data={items}
+                data={recomendationData}
                 renderItem={({ item }) => (
                     <TouchableOpacity>
-                        <NewPost
-                            image={item.image}
-                            title={item.title}
-                            description={item.description} />
+                        <Recomendations
+                            image_recomendation={item.image_recomendation}
+                            tile_recomendation={item.title_recomendation}
+                            price_recomendation={item.price_recomendation}
+                        />
                     </TouchableOpacity>
                 )}
             >

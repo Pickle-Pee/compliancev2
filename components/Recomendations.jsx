@@ -1,100 +1,91 @@
+import { useState } from 'react';
 import {
     View,
     Text,
     Image,
-    ScrollView,
-    StyleSheet
-} from 'react-native'
+    StyleSheet,
+    TouchableOpacity
+} from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
-export const Recomendations = ({ image_recomendation, title_recomendation, price_recomendation }) => {
+
+export const Recomendations = ({ image_recomendation, title_recomendation, price_recomendation, description_recomendation, item }) => {
+    const [isFavorite, setIsFavorite] = useState(false);
+    const [favoriteItems, setFavoriteItems] = useState([]);
+
+
+    const handleFavoritePress = () => {
+        if (isFavorite) {
+            const newFavoriteItems = favoriteItems.filter(item => item !== title_recomendation);
+            setFavoriteItems(newFavoriteItems);
+        } else {
+            const newFavoriteItems = [...favoriteItems, title_recomendation];
+            setFavoriteItems(newFavoriteItems);
+        }
+        setIsFavorite(!isFavorite);
+        console.log(favoriteItems)
+    };
     return (
-        <View style={styles.recomendations}>
-            <Text style={styles.cancelCourses}>Рекомендуем ознакомиться</Text>
-            <ScrollView horizontal={true} style={styles.scrollItems} showsHorizontalScrollIndicator={false}>
-                <View style={{ width: 100, marginRight: 20, marginLeft: 10, alignItems: 'center' }}>
-                    <Image
-                        source={{ uri: image_recomendation }}
-                        style={styles.rec_item}
+        <View style={styles.container} >
+            <View style={{ flexDirection: 'row', height: 100, margin: 15 }}>
+                <Image
+                    style={styles.card_image}
+                    source={{ uri: image_recomendation }} />
+                <Text style={styles.h1}>{title_recomendation}</Text>
+                <TouchableOpacity onPress={handleFavoritePress}>
+                    <Ionicons
+                        name={isFavorite ? 'heart' : 'heart-outline'}
+                        size={30}
+                        color={isFavorite ? '#B30E1F' : 'black'}
                     />
-                    <Text style={{ textAlign: 'center', paddingTop: 5 }}>{title_recomendation}</Text>
-                    <Text style={styles.price}>{price_recomendation}</Text>
-                </View>
-                <View style={{ width: 100, marginRight: 20, marginLeft: 10, alignItems: 'center' }}>
-                    <Image
-                        source={{ uri: image_recomendation }}
-                        style={styles.rec_item}
-                    />
-                    <Text style={{ textAlign: 'center', paddingTop: 5 }}>{title_recomendation}</Text>
-                    <Text style={styles.price}>{price_recomendation}</Text>
-                </View>
-                <View style={{ width: 100, marginRight: 20, marginLeft: 10, alignItems: 'center' }}>
-                    <Image
-                        source={{ uri: image_recomendation }}
-                        style={styles.rec_item}
-                    />
-                    <Text style={{ textAlign: 'center', paddingTop: 5 }}>{title_recomendation}</Text>
-                    <Text style={styles.price}>{price_recomendation}</Text>
-                </View>
-                <View style={{ width: 100, marginRight: 20, marginLeft: 10, alignItems: 'center' }}>
-                    <Image
-                        source={{ uri: image_recomendation }}
-                        style={styles.rec_item}
-                    />
-                    <Text style={{ textAlign: 'center', paddingTop: 5 }}>{title_recomendation}</Text>
-                    <Text style={styles.price}>{price_recomendation}</Text>
-                </View>
-                <View style={{ width: 100, marginRight: 20, marginLeft: 10, alignItems: 'center' }}>
-                    <Image
-                        source={{ uri: image_recomendation }}
-                        style={styles.rec_item}
-                    />
-                    <Text style={{ textAlign: 'center', paddingTop: 5 }}>{title_recomendation}</Text>
-                    <Text style={styles.price}>{price_recomendation}</Text>
-                </View>
-            </ScrollView>
+                </TouchableOpacity>
+            </View>
+            <View style={{ flexDirection: 'row' }}>
+                <Text style={styles.recentPrice}>{price_recomendation} ₽</Text>
+                <Text style={styles.recentDescription}>{description_recomendation}</Text>
+            </View>
         </View>
-    )
+    );
 }
 
 const styles = StyleSheet.create({
-    recomendations: {
-        flexDirection: 'column',
-        marginBottom: 20,
-        paddingBottom: 15,
-        paddingTop: 10,
-        shadowOpacity: 0.2,
+    container: {
+        backgroundColor: '#fff',
+        width: 350,
+        borderRadius: 15,
+        elevation: 4,
         shadowColor: '#000',
         shadowOffset: {
-            height: 1,
-            width: 0
+            width: 0,
+            height: 4,
         },
-        shadowRadius: 15,
-        backgroundColor: '#fff',
-
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        margin: 10,
+        height: 200
     },
-    cancelCourses: {
-        textAlign: 'center',
-        marginBottom: 10,
-        fontSize: 20,
+    h1: {
         fontWeight: '600',
+        fontSize: 18,
+        paddingLeft: 10,
+        width: '60%'
     },
-    profile_image: {
-        width: 100,
-        height: 100,
-        borderRadius: 50,
-        marginRight: 10,
-        marginLeft: 10,
+    card_image: {
+        width: '30%',
+        height: '100%',
+        borderRadius: 15
     },
-    price: {
-        borderRadius: 15,
-        backgroundColor: 'white',
-        padding: 10,
+    recentPrice: {
+        fontSize: 16,
+        fontWeight: '600',
+        color: '#B30E1F',
+        paddingTop: 40,
+        paddingLeft: 15
     },
-    rec_item: {
-        width: 100,
-        height: 100,
-        borderRadius: 10,
-        marginRight: 10,
-        marginLeft: 10,
-    },
+    recentDescription: {
+        fontSize: 16,
+        width: '70%',
+        paddingLeft: 30,
+        fontWeight: '400'
+    }
 })

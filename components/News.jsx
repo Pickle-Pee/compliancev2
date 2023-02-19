@@ -1,24 +1,14 @@
-import { StyleSheet, Text, View, Button, Image } from 'react-native';
-import { NavigationContainer, StackActions } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Ionicons } from '@expo/vector-icons';
-import { createStackNavigator } from '@react-navigation/stack';
+import { StyleSheet, Text, View, Image } from 'react-native';
 
 
 export const NewPost = ({ title, image, description }) => {
 
-    const Stack = createStackNavigator();
 
     return (
         <View style={styles.container} >
             <Image
                 style={styles.card_image}
                 source={{ uri: image }} />
-            <View style={{ flex: 1 }}>
-                <Text style={styles.h1}>{title}</Text>
-                <Text style={styles.description_p} numberOfLines={5}>{description}</Text>
-            </View>
         </View>
     );
 }
@@ -26,31 +16,24 @@ export const NewPost = ({ title, image, description }) => {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#fff',
-        height: 300,
+        width: 350,
         borderRadius: 15,
-        shadowColor: "#000",
+        elevation: 4,
+        shadowColor: '#000',
         shadowOffset: {
-            width: 5,
-            height: 5,
+          width: 0,
+          height: 4,
         },
-        shadowOpacity: 0.4,
-        shadowRadius: 5,
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
         margin: 10,
-        flex: 1
-    },
-    h1: {
-        fontWeight: '800',
-        fontSize: 20,
-        margin: 10
+        padding: 10,
+        height: 200
     },
     card_image: {
         width: '100%',
-        height: '50%',
-        borderTopRightRadius: 15,
-        borderTopLeftRadius: 15,
-    },
-    description_p: {
-        textAlign: 'justify',
-        marginHorizontal: 10
+        height: '100%',
+        borderRadius: 15,
+        padding: 15
     }
 });

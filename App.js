@@ -1,15 +1,10 @@
 
-import {
-  View,
-  StyleSheet,
-  StatusBar
-} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { Navigation } from './components/Navigation';
 import React, { useState } from 'react';
 import LoginScreen from './screens/AuthScreen';
 
-function App() {
+export default App = () => {
 
   return (
     <NavigationContainer>
@@ -18,12 +13,3 @@ function App() {
   );
 };
 
-
-const styles = StyleSheet.create({
-  container: {
-    height: '100%',
-    justifyContent: 'center'
-  }
-});
-
-export default App;
