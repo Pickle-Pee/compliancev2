@@ -9,7 +9,6 @@ import { FavoritesScreen } from '../screens/FavoritesScreen';
 import { ProfileScreen } from '../screens/ProfileScreen';
 import AuthScreen from '../screens/AuthScreen';
 import RegisterScreen from '../screens/RegistrationScreen';
-import QuestionScreen from '../screens/LearnScreen';
 import FullNewScreen from '../screens/FullNewScreen'
 
 

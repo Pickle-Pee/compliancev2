@@ -39,4 +39,4 @@ const EducationScreen = ({ navigation }) => {
   );
 };
 
-export default QuestionScreen;
+export default EducationScreen;
