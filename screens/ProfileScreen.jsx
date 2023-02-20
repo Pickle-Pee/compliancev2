@@ -1,13 +1,17 @@
 import {
   StyleSheet,
   ScrollView,
+  TouchableOpacity,
+  Text,
+  View
 } from 'react-native';
 import axios from 'axios';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Loading } from '../components/Loading';
 import { PersonProfilePage } from '../components/ProfileInfo';
-import { RecentComplete } from '../components/RecentComplete';
-import { Recomendations } from '../components/Recomendations';
+import { RecentItem } from '../components/RecentItem';
+import { FlatList } from 'react-native-gesture-handler';
+import { Ionicons } from '@expo/vector-icons';
 
 export const ProfileScreen = ({ navigation }) => {
   const [profileData, setProfileData] = React.useState();
@@ -16,14 +20,14 @@ export const ProfileScreen = ({ navigation }) => {
 
   useEffect(() => {
     Promise.all([
-      axios.get('https://63a0636424d74f9fe836ccd4.mockapi.io/news/users'),
-      axios.get('https://63a0636424d74f9fe836ccd4.mockapi.io/news/recent')
+      axios.get('https://63a0636424d74f9fe836ccd4.mockapi.io/news/recent'),
+      axios.get('https://63a0636424d74f9fe836ccd4.mockapi.io/news/users')
     ])
       .then((response) => {
-        const profileData = response[0].data;
-        const recentData = response[1].data;
-        setProfileData(profileData);
+        const recentData = response[0].data;
+        const personData = response[1].data;
         setRecentData(recentData);
+        setProfileData(personData);
       })
       .catch((error) => {
         console.log(error);
@@ -41,29 +45,99 @@ export const ProfileScreen = ({ navigation }) => {
   const personProfile = profileData[2];
 
   return (
-    <ScrollView>
+    <ScrollView style={{ backgroundColor: 'white' }}>
       <PersonProfilePage
         avatar={personProfile.avatar}
         name={personProfile.name}
         rating={personProfile.rating}
         courses_count={personProfile.courses_count}
       />
-      <RecentComplete
-        image_recent="https://vsegda-pomnim.com/uploads/posts/2022-03/1647611573_1-vsegda-pomnim-com-p-karibskoe-more-foto-1.jpg" // {recentData.image_recent}
-        title_recent="quantifying" // {recentData.title_recent}
-      />
-      <Recomendations
-        image_recomendation="https://mirpozitiva.ru/wp-content/uploads/2019/11/1480494344_kot_sneg.jpg"// {recomendationData.image_recomendation}
-        title_recomendation="Human Identity Architect" // {recomendationData.title_recomendation}
-        price_recomendation="916.00 P" // {recomendationData.price_recomendation}
-      />
+      <View style={{ backgroundColor: 'white', paddingHorizontal: 15, paddingBottom: 25 }}>
+        <Text
+          style={{
+            fontSize: 22,
+            fontWeight: '500'
+          }}
+        >Недавно пройденные</Text>
+        <View style={{
+          borderBottomColor: '#B30E1F',
+          borderBottomWidth: 4,
+          marginTop: 0,
+          width: 60
+        }}></View>
+      </View>
+      <ScrollView
+        horizontal={true}
+        showsHorizontalScrollIndicator={false}
+        style={{ backgroundColor: 'white' }}>
+        {recentData.map((item, index) => (
+          <TouchableOpacity key={index} onPress={() => navigation.navigate('FullNewScreen', { id: item.id })}>
+            <RecentItem
+              image_recent={item.image}
+              title_recent={item.title_recent}
+            />
+          </TouchableOpacity>
+        ))}
+      </ScrollView>
+      <View style={{ backgroundColor: 'white', paddingVertical: 15, paddingHorizontal: 15 }}>
+        <Text
+          style={{
+            fontSize: 22,
+            fontWeight: '500'
+          }}
+        >Настройки</Text>
+        <View style={{
+          borderBottomColor: '#B30E1F',
+          borderBottomWidth: 4,
+          marginTop: 0,
+          width: 60
+        }}></View>
+        <TouchableOpacity style={{ paddingTop: 15, flexDirection: 'row', alignItems: 'center' }}>
+          <Ionicons
+            name='person-outline'
+            color={'black'}
+            size={28}
+           />
+           <Text style={{
+            fontSize: 18,
+            fontWeight: '400',
+            paddingLeft: 15
+          }}>Аккаунт</Text>
+
+        </TouchableOpacity>
+        <TouchableOpacity style={{ paddingTop: 15, flexDirection: 'row', alignItems: 'center' }}>
+          <Ionicons
+            name='brush-outline'
+            color={'black'}
+            size={28}
+           />
+           <Text style={{
+            fontSize: 18,
+            fontWeight: '400',
+            paddingLeft: 15
+          }}>Тема оформления</Text>
+
+        </TouchableOpacity>
+        <TouchableOpacity style={{ paddingTop: 15, flexDirection: 'row', alignItems: 'center' }}>
+          <Ionicons
+            name='notifications-outline'
+            color={'black'}
+            size={28}
+           />
+           <Text style={{
+            fontSize: 18,
+            fontWeight: '400',
+            paddingLeft: 15
+          }}>Уведомления</Text>
+        </TouchableOpacity>
+      </View>
     </ScrollView>
   )
 };
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "white",
     display: 'flex',
     alignItems: 'center',
     height: '100%'

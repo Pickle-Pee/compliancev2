@@ -1,15 +1,16 @@
 import {
     StyleSheet,
-    FlatList,
     View,
     TouchableOpacity,
+    ScrollView,
 } from 'react-native';
-import { Recomendations } from '../components/Recomendations';
-import axios from 'axios';
 import React, { useEffect } from 'react';
+import axios from 'axios';
+import { EducationItem } from '../components/LearnItem';
 import { Loading } from '../components/Loading';
 
-export const EducationScreen = ({ navigation }) => {
+
+export const EducationsScreen = ({ navigation }) => {
     const [isLoading, setIsLoading] = React.useState(true);
     const [recomendationData, setRecomendationData] = React.useState([]);
 
@@ -28,6 +29,7 @@ export const EducationScreen = ({ navigation }) => {
             .finally(() => {
                 setIsLoading(false);
             });
+
     }, []);
 
     if (isLoading) {
@@ -35,35 +37,52 @@ export const EducationScreen = ({ navigation }) => {
     }
 
     return (
-        <View style={styles.container}>
-            <FlatList
-                style={styles.postList}
-                data={recomendationData}
-                renderItem={({ item }) => (
-                    <TouchableOpacity>
-                        <Recomendations
+        <View style={styles.container} >
+            <ScrollView
+                horizontal={false}
+                showsHorizontalScrollIndicator={false}>
+                {recomendationData.map((item, index) => (
+                    <TouchableOpacity key={index} onPress={() => navigation.navigate('FullNewScreen', { id: item.id })}>
+                        <EducationItem
                             image_recomendation={item.image_recomendation}
-                            tile_recomendation={item.title_recomendation}
+                            title_recomendation={item.title_recomendation}
                             price_recomendation={item.price_recomendation}
+                            description_recomendation={item.description_recomendation}
                         />
                     </TouchableOpacity>
-                )}
-            >
-            </FlatList>
+                ))}
+            </ScrollView>
         </View>
     );
 }
 
-
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: "#FFFFFF",
+        shadowColor: '#000',
         display: 'flex',
-        alignItems: 'center',
-        height: '100%'
+        height: '100%',
     },
-    postList: {
-        width: '100%',
-        marginTop: 10
+    h1: {
+        fontWeight: '600',
+        fontSize: 18,
+        paddingLeft: 10,
+        width: '60%'
+    },
+    card_image: {
+        width: '30%',
+        height: '100%',
+        borderRadius: 15
+    },
+    recentPrice: {
+        fontSize: 16,
+        fontWeight: '600',
+        color: '#B30E1F',
+        paddingTop: 40,
+    },
+    recentDescription: {
+        fontSize: 16,
+        width: '70%',
+        paddingLeft: 15,
+        fontWeight: '400'
     }
-});
+})

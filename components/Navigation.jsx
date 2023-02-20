@@ -2,9 +2,9 @@ import { StyleSheet, TouchableOpacity, TextInput, View, Animated, useAnimatedVal
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, Component } from 'react';
 import { HomeScreen } from '../screens/HomeScreen';
-import { EducationScreen } from '../screens/LearnsScreen';
+import { EducationScreen, EducationsScreen } from '../screens/LearnsScreen';
 import { FavoritesScreen } from '../screens/FavoritesScreen';
 import { ProfileScreen } from '../screens/ProfileScreen';
 import AuthScreen from '../screens/AuthScreen';
@@ -26,7 +26,6 @@ const TabStack = ({ navigation }) => {
 
     const handleSearchPress = () => {
         setSearchMode(!searchMode);
-        setShow(!show);
         Animated.timing(animatedValue, {
             toValue: 1, // устанавливаем значение свойства transform
             duration: 1500, // длительность анимации
@@ -36,27 +35,27 @@ const TabStack = ({ navigation }) => {
 
     const handleFocus = () => {
         Animated.timing(animatedValue, {
-          toValue: 1,
-          duration: 300,
-          useNativeDriver: true,
+            toValue: 1,
+            duration: 300,
+            useNativeDriver: true,
         }).start();
-      };
-    
-      const handleBlur = () => {
+    };
+
+    const handleBlur = () => {
         Animated.timing(animatedValue, {
-          toValue: 0,
-          duration: 300,
-          useNativeDriver: true,
+            toValue: 0,
+            duration: 300,
+            useNativeDriver: true,
         }).start();
-      };
-    
+    };
+
 
     const translateX = animatedValue.interpolate({
         inputRange: [0, 10],
         outputRange: [0, 0],
     });
 
-    const transformStyle = { transform: [{ translateX }]}
+    const transformStyle = { transform: [{ translateX }] }
 
     return (
         <Tab.Navigator
@@ -105,7 +104,7 @@ const TabStack = ({ navigation }) => {
             />
             <Tab.Screen
                 name="Courses"
-                component={EducationScreen}
+                component={EducationsScreen}
                 options={{
                     title: 'Обучение',
                     headerStyle: {
@@ -157,7 +156,7 @@ const TabStack = ({ navigation }) => {
                 name="Favorites"
                 component={FavoritesScreen}
                 options={{
-                    title: 'Избранное',
+                    headerTitle: 'Избранное',
                     headerStyle: {
                         backgroundColor: '#B30E1F',
                         height: 90,
@@ -174,7 +173,10 @@ const TabStack = ({ navigation }) => {
                     ),
                     headerLeft: () => (
                         <View
-                            style={{ paddingHorizontal: 15, alignContent: 'center' }}>
+                            style={{ paddingHorizontal: 15, flexDirection: 'row', justifyContent: 'space-between' }}>
+                            <TouchableOpacity onPress={handleSearchPress}>
+                                <Ionicons name="search" size={25} color="white" style={{ position: 'relative', paddingBottom: 5 }} />
+                            </TouchableOpacity>
                             {searchMode && (
                                 <Animated.View style={transformStyle}>
                                     <TextInput
@@ -186,8 +188,9 @@ const TabStack = ({ navigation }) => {
                                             height: 30,
                                             borderRadius: 10,
                                             padding: 5,
-                                            marginLeft: 50,
-                                            position: 'absolute',
+                                            marginLeft: 20,
+                                            position: 'relative',
+
                                         }}
                                         onChangeText={setSearchText}
                                         value={searchText}
@@ -196,9 +199,6 @@ const TabStack = ({ navigation }) => {
                                     />
                                 </Animated.View>
                             )}
-                            <TouchableOpacity onPress={handleSearchPress}>
-                                <Ionicons name="search" size={25} color="white" style={{ position: 'relative', paddingBottom: 5 }} />
-                            </TouchableOpacity>
                         </View>
                     )
                 }}
@@ -237,7 +237,7 @@ export const Navigation = () => {
             <Stack.Screen name='Tab' component={TabStack} />
             <Stack.Screen name='HomeScreen' component={HomeScreen} />
             <Stack.Screen name='FullNewScreen' component={FullNewScreen} />
-            <Stack.Screen name='QuestionScreen' component={QuestionScreen} />
+            <Stack.Screen name='EducationScreen' component={EducationsScreen} />
             <Stack.Screen name='AuthScreen' component={AuthScreen} />
             <Stack.Screen name='Registration' component={RegisterScreen} />
             <Stack.Screen name='Profile' component={ProfileScreen} />

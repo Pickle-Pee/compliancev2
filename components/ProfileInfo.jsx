@@ -1,21 +1,10 @@
 import {
     StyleSheet,
     Text,
-    TextInput,
-    TouchableOpacity,
-    StatusBar,
     View,
-    Button,
-    SafeAreaView,
-    ScrollView,
     Image
 } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Ionicons } from '@expo/vector-icons';
-import React, { useState } from 'react';
-import { FlatList } from 'react-native-gesture-handler';
+import React from 'react';
 
 
 export const PersonProfilePage = ({ avatar, name, rating, courses_count }) => {
@@ -47,12 +36,12 @@ const styles = StyleSheet.create({
         width: 100,
         height: 100,
         borderRadius: 50,
-        marginRight: 10,
-        marginLeft: 10,
+        marginHorizontal: 10
     },
     personName: {
-        fontSize: 26,
+        fontSize: 22,
         fontWeight: '500',
+        paddingRight: 10
 
     },
     profileInfo: {

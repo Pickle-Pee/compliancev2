@@ -40,7 +40,7 @@ export const Recomendations = ({ image_recomendation, title_recomendation, price
                     />
                 </TouchableOpacity>
             </View>
-            <View style={{ flexDirection: 'row' }}>
+            <View style={{ flexDirection: 'row', justifyContent: 'flex-end'}}>
                 <Text style={styles.recentPrice}>{price_recomendation} ₽</Text>
                 <Text style={styles.recentDescription}>{description_recomendation}</Text>
             </View>
@@ -80,12 +80,11 @@ const styles = StyleSheet.create({
         fontWeight: '600',
         color: '#B30E1F',
         paddingTop: 40,
-        paddingLeft: 15
     },
     recentDescription: {
         fontSize: 16,
         width: '70%',
-        paddingLeft: 30,
+        paddingLeft: 15,
         fontWeight: '400'
     }
 })

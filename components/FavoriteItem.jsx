@@ -1,53 +1,89 @@
-import { StyleSheet, Text, View, Image } from 'react-native';
-
-export const FavoriteItem = ({ title, image, description }) => {
-
+import {
+    StyleSheet,
+    Image,
+    View,
+    TouchableOpacity,
+    Text
+  } from 'react-native';
+  import { Ionicons } from '@expo/vector-icons';
+  import React, { useState } from 'react';
+  
+  
+  export const FavoriteItem = ({ image_recomendation, title_recomendation, description_recomendation, navigation }) => {
+    const [isFavorite, setIsFavorite] = useState(false);
+    const [favoriteItems, setFavoriteItems] = useState([]);
+  
+  
+    const handleFavoritePress = () => {
+        if (isFavorite) {
+            const newFavoriteItems = favoriteItems.filter(item => item !== title_recomendation);
+            setFavoriteItems(newFavoriteItems);
+        } else {
+            const newFavoriteItems = [...favoriteItems, title_recomendation];
+            setFavoriteItems(newFavoriteItems);
+        }
+        setIsFavorite(!isFavorite);
+        console.log(favoriteItems)
+    };
     return (
         <View style={styles.container} >
-            <Image
-                style={styles.card_image}
-                source={{ uri: image }} />
-            <View style={{ flex: 1 }}>
-                <Text style={styles.h1}>{title}</Text>
-                <Text style={styles.description_p} numberOfLines={4}>{description}</Text>
+            <View style={{ flexDirection: 'row', height: 100, margin: 15 }}>
+                <Image
+                    style={styles.card_image}
+                    source={{ uri: image_recomendation }} />
+                <Text style={styles.h1}>{title_recomendation}</Text>
+                <TouchableOpacity onPress={handleFavoritePress}>
+                    <Ionicons
+                        name={isFavorite ? 'heart' : 'heart-outline'}
+                        size={30}
+                        color={isFavorite ? '#B30E1F' : 'black'}
+                    />
+                </TouchableOpacity>
+            </View>
+            <View style={{ flexDirection: 'row'}}>
+                <Text style={styles.recentDescription}>{description_recomendation}</Text>
             </View>
         </View>
     );
-}
-
-const styles = StyleSheet.create({
+  }
+  
+  const styles = StyleSheet.create({
     container: {
         backgroundColor: '#fff',
-        height: 100,
-        shadowColor: "#000",
+        width: 350,
+        borderRadius: 15,
+        elevation: 4,
+        shadowColor: '#000',
         shadowOffset: {
-            width: 5,
-            height: 5,
+            width: 0,
+            height: 4,
         },
-        shadowOpacity: 0.4,
-        shadowRadius: 5,
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
         margin: 10,
-        flexDirection: "row",
-        borderTopRightRadius: 15,
-        borderTopLeftRadius: 50,
-        borderBottomRightRadius: 15,
-        borderBottomLeftRadius: 50,
+        height: 200
     },
     h1: {
-        fontWeight: '800',
-        fontSize: 15,
-        margin: 5,
+        fontWeight: '600',
+        fontSize: 18,
+        paddingHorizontal: 10,
+        width: '60%'
     },
     card_image: {
         width: '30%',
-        borderTopRightRadius: 50,
-        borderTopLeftRadius: 50,
-        borderBottomRightRadius: 50,
-        borderBottomLeftRadius: 50,
+        height: '100%',
+        borderRadius: 15
     },
-    description_p: {
-        textAlign: 'justify',
-        margin: 5,
-        flex: 3
+    recentPrice: {
+        fontSize: 16,
+        fontWeight: '600',
+        color: '#B30E1F',
+        paddingTop: 40,
+    },
+    recentDescription: {
+        fontSize: 16,
+        width: '100%',
+        paddingHorizontal: 15,
+        fontWeight: '400'
     }
-});
+  })
