@@ -1,12 +1,12 @@
-import { StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, TouchableOpacity, TextInput, View, Animated, useAnimatedValue } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
+import React, { useState, useRef } from 'react';
 import { HomeScreen } from '../screens/HomeScreen';
 import { EducationScreen } from '../screens/LearnsScreen';
 import { FavoritesScreen } from '../screens/FavoritesScreen';
 import { ProfileScreen } from '../screens/ProfileScreen';
-import React from 'react';
 import AuthScreen from '../screens/AuthScreen';
 import RegisterScreen from '../screens/RegistrationScreen';
 import QuestionScreen from '../screens/LearnScreen';
@@ -16,10 +16,51 @@ import FullNewScreen from '../screens/FullNewScreen'
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
+
 const TabStack = ({ navigation }) => {
+    const [searchMode, setSearchMode] = useState(false);
+    const [searchText, setSearchText] = useState('');
+    const [show, setShow] = useState(false);
+    const position = new Animated.Value(0);
+    const animatedValue = useRef(new Animated.Value(0)).current;
+
+    const handleSearchPress = () => {
+        setSearchMode(!searchMode);
+        setShow(!show);
+        Animated.timing(animatedValue, {
+            toValue: 1, // устанавливаем значение свойства transform
+            duration: 1500, // длительность анимации
+            useNativeDriver: true, // включаем нативный драйвер для оптимизации производительности
+        }).start(); // запускаем анимацию
+    };
+
+    const handleFocus = () => {
+        Animated.timing(animatedValue, {
+          toValue: 1,
+          duration: 300,
+          useNativeDriver: true,
+        }).start();
+      };
+    
+      const handleBlur = () => {
+        Animated.timing(animatedValue, {
+          toValue: 0,
+          duration: 300,
+          useNativeDriver: true,
+        }).start();
+      };
+    
+
+    const translateX = animatedValue.interpolate({
+        inputRange: [0, 10],
+        outputRange: [0, 0],
+    });
+
+    const transformStyle = { transform: [{ translateX }]}
+
     return (
         <Tab.Navigator
-        initialRouteName='HomeScreen'
+            initialRouteName='HomeScreen'
             screenOptions={({ route }) => ({
                 tabBarIcon: ({ focused, color, size }) => {
                     let iconName;
@@ -82,13 +123,33 @@ const TabStack = ({ navigation }) => {
                         </TouchableOpacity>
                     ),
                     headerLeft: () => (
-                        <TouchableOpacity
-                            style={{ paddingBottom: 5, paddingHorizontal: 15 }}>
-                            <Ionicons
-                                name='search'
-                                size={25}
-                                color={'white'}/>
-                        </TouchableOpacity>
+                        <View
+                            style={{ paddingHorizontal: 15, alignContent: 'center' }}>
+                            {searchMode && (
+                                <Animated.View style={transformStyle}>
+                                    <TextInput
+                                        placeholder='Поиск'
+                                        placeholderTextColor={'gray'}
+                                        style={{
+                                            backgroundColor: 'white',
+                                            width: 250,
+                                            height: 30,
+                                            borderRadius: 10,
+                                            padding: 5,
+                                            marginLeft: 50,
+                                            position: 'absolute',
+                                        }}
+                                        onChangeText={setSearchText}
+                                        value={searchText}
+                                        onBlur={handleBlur}
+                                        onFocus={handleFocus}
+                                    />
+                                </Animated.View>
+                            )}
+                            <TouchableOpacity onPress={handleSearchPress}>
+                                <Ionicons name="search" size={25} color="white" style={{ position: 'relative', paddingBottom: 5 }} />
+                            </TouchableOpacity>
+                        </View>
                     )
                 }}
             />
@@ -112,13 +173,33 @@ const TabStack = ({ navigation }) => {
                         </TouchableOpacity>
                     ),
                     headerLeft: () => (
-                        <TouchableOpacity
-                            style={{ paddingBottom: 5, paddingHorizontal: 15 }}>
-                            <Ionicons
-                                name='search'
-                                size={25}
-                                color={'white'}/>
-                        </TouchableOpacity>
+                        <View
+                            style={{ paddingHorizontal: 15, alignContent: 'center' }}>
+                            {searchMode && (
+                                <Animated.View style={transformStyle}>
+                                    <TextInput
+                                        placeholder='Поиск'
+                                        placeholderTextColor={'gray'}
+                                        style={{
+                                            backgroundColor: 'white',
+                                            width: 250,
+                                            height: 30,
+                                            borderRadius: 10,
+                                            padding: 5,
+                                            marginLeft: 50,
+                                            position: 'absolute',
+                                        }}
+                                        onChangeText={setSearchText}
+                                        value={searchText}
+                                        onBlur={handleBlur}
+                                        onFocus={handleFocus}
+                                    />
+                                </Animated.View>
+                            )}
+                            <TouchableOpacity onPress={handleSearchPress}>
+                                <Ionicons name="search" size={25} color="white" style={{ position: 'relative', paddingBottom: 5 }} />
+                            </TouchableOpacity>
+                        </View>
                     )
                 }}
             />

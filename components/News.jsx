@@ -27,7 +27,6 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 4,
         margin: 10,
-        padding: 10,
         height: 200
     },
     card_image: {
