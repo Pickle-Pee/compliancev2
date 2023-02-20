@@ -51,7 +51,7 @@ export const EducationItem = ({ image_recomendation, title_recomendation, price_
 const styles = StyleSheet.create({
   container: {
       backgroundColor: '#fff',
-      width: 350,
+      width: '95%',
       borderRadius: 15,
       elevation: 4,
       shadowColor: '#000',

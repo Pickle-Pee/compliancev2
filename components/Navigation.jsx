@@ -155,7 +155,7 @@ const TabStack = ({ navigation }) => {
                 name="Favorites"
                 component={FavoritesScreen}
                 options={{
-                    headerTitle: 'Избранное',
+                    title: 'Избранное',
                     headerStyle: {
                         backgroundColor: '#B30E1F',
                         height: 90,
