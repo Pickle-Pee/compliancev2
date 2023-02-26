@@ -38,7 +38,8 @@ const styles = StyleSheet.create({
         marginLeft: 15,
         height: '100%',
         flexDirection: 'column',
-        alignItems: 'center'
+        alignItems: 'center',
+        
     },
     h1: {
         fontWeight: '500',

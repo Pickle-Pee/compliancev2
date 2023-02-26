@@ -1,41 +1,69 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import axios from 'axios';
+import { Loading } from '../components/Loading';
 
 const EducationScreen = ({ navigation }) => {
   const [questions, setQuestions] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [selectedAnswers, setSelectedAnswers] = useState([]);
+  const [selectedAnswerIndex, setSelectedAnswerIndex] = useState(null);
 
   useEffect(() => {
-    async function fetchQuestions() {
-      const response = await fetch('https://your-backend-api.com/questions');
-      const data = await response.json();
-      setQuestions(data);
-    }
-    fetchQuestions();
-  }, []);
+    Promise.all([
+        axios.get('https://wavcpr2m09.api.quickmocker.com/answers')
+    ])
+        .then((response) => {
+            const data = response[0].data;
+            setQuestions(data);
+            console.log(questions)
+        })
+        .catch((error) => {
+            console.log(error);
+            alert(error);
+        })
+}, []);
 
-  const currentQuestion = questions[currentQuestionIndex];
-
-  const onAnswerSelect = async (answerId) => {
-    setSelectedAnswers([...selectedAnswers, answerId]);
-    setCurrentQuestionIndex(currentQuestionIndex + 1);
-    if (currentQuestionIndex + 1 === questions.length) {
-      navigation.navigate('Result');
-    }
+  const handleAnswerPress = (index) => {
+    setSelectedAnswerIndex(index);
   };
 
+  // const handleNextPress = () => {
+  //   const nextQuestionIndex = currentQuestionIndex;
+  //   setCurrentQuestionIndex(nextQuestionIndex);
+  //   setSelectedAnswerIndex(null);
+  // };
+
+  // const currentQuestion = questions.length > 0 ? questions[currentQuestionIndex] : null;
+
+  // console.log(currentQuestion)
+
+  
+
+  if (!questions) {
+    return <Loading />;
+  }
+
   return (
-    <View>
-      <Text>{currentQuestion.text}</Text>
-      {currentQuestion.answers.map((answer) => (
-        <TouchableOpacity
-          key={answer.id}
-          onPress={() => onAnswerSelect(answer.id)}>
-          <Text>{answer.text}</Text>
-        </TouchableOpacity>
-      ))}
-    </View>
+    <ScrollView>
+      {questions && (
+        <>
+          <Text>{questions.question}</Text>
+          {questions.answers.map((answer, index) => (
+            <TouchableOpacity
+              key={index}
+              onPress={() => handleAnswerPress(index)}
+            >
+              <Text>{answer}</Text>
+            </TouchableOpacity>
+          ))}
+          {selectedAnswerIndex !== null && (
+            <TouchableOpacity>
+              <Text>Next</Text>
+            </TouchableOpacity>
+          )}
+        </>
+      )}
+    </ScrollView>
   );
 };
 

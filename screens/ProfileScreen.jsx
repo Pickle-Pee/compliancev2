@@ -14,20 +14,20 @@ import { FlatList } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
 
 export const ProfileScreen = ({ navigation }) => {
-  const [profileData, setProfileData] = React.useState();
+  // const [profileData, setProfileData] = React.useState();
   const [recentData, setRecentData] = React.useState();
   const [isLoading, setIsLoading] = React.useState(true);
 
   useEffect(() => {
     Promise.all([
       axios.get('https://63a0636424d74f9fe836ccd4.mockapi.io/news/recent'),
-      axios.get('https://63a0636424d74f9fe836ccd4.mockapi.io/news/users')
+      // axios.get('https://63a0636424d74f9fe836ccd4.mockapi.io/news/users')
     ])
       .then((response) => {
         const recentData = response[0].data;
-        const personData = response[1].data;
+        // const personData = response[1].data;
         setRecentData(recentData);
-        setProfileData(personData);
+        // setProfileData(personData);
       })
       .catch((error) => {
         console.log(error);
@@ -42,15 +42,15 @@ export const ProfileScreen = ({ navigation }) => {
     return <Loading />;
   }
 
-  const personProfile = profileData[2];
+  // const personProfile = profileData[30];
 
   return (
     <ScrollView style={{ backgroundColor: 'white' }}>
       <PersonProfilePage
-        avatar={personProfile.avatar}
-        name={personProfile.name}
-        rating={personProfile.rating}
-        courses_count={personProfile.courses_count}
+        avatar= 'https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/490.jpg' //{personProfile.avatar}
+        name= 'Petya' //{personProfile.name}
+        rating='228' //{personProfile.rating}
+        courses_count='228'  //{personProfile.courses_count}
       />
       <View style={{ backgroundColor: 'white', paddingHorizontal: 15, paddingBottom: 25 }}>
         <Text

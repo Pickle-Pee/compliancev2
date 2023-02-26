@@ -110,7 +110,7 @@ export const HomeScreen = ({ navigation }) => {
         horizontal={true}
         showsHorizontalScrollIndicator={false}>
         {recomendationData.map((item, index) => (
-          <TouchableOpacity key={index} onPress={() => navigation.navigate('FullNewScreen', { id: item.id })}>
+          <TouchableOpacity key={index} onPress={() => navigation.navigate('EducationScreen', { id: item.id })}>
             <Recomendations
               image_recomendation={item.image_recomendation}
               title_recomendation={item.title_recomendation}

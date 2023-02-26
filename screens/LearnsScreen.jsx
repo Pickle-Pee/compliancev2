@@ -42,7 +42,7 @@ export const EducationsScreen = ({ navigation }) => {
                 horizontal={false}
                 showsHorizontalScrollIndicator={false}>
                 {recomendationData.map((item, index) => (
-                    <TouchableOpacity key={index} onPress={() => navigation.navigate('FullNewScreen', { id: item.id })}>
+                    <TouchableOpacity key={index} onPress={() => navigation.navigate('EducationInfoScreen', { id: item.id })}>
                         <EducationItem
                             image_recomendation={item.image_recomendation}
                             title_recomendation={item.title_recomendation}

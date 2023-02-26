@@ -4,7 +4,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import React, { useState, useRef, Component } from 'react';
 import { HomeScreen } from '../screens/HomeScreen';
-import { EducationScreen, EducationsScreen } from '../screens/LearnsScreen';
+import { EducationsScreen } from '../screens/LearnsScreen';
+import EducationScreen from '../screens/LearnScreen';
+import EducationInfoScreen from '../screens/LearnInfoScreen'
 import { FavoritesScreen } from '../screens/FavoritesScreen';
 import { ProfileScreen } from '../screens/ProfileScreen';
 import AuthScreen from '../screens/AuthScreen';
@@ -236,10 +238,12 @@ export const Navigation = () => {
             <Stack.Screen name='Tab' component={TabStack} />
             <Stack.Screen name='HomeScreen' component={HomeScreen} />
             <Stack.Screen name='FullNewScreen' component={FullNewScreen} />
-            <Stack.Screen name='EducationScreen' component={EducationsScreen} />
+            <Stack.Screen name='EducationsScreen' component={EducationsScreen} />
+            <Stack.Screen name='EducationScreen' component={EducationScreen} />
             <Stack.Screen name='AuthScreen' component={AuthScreen} />
             <Stack.Screen name='Registration' component={RegisterScreen} />
             <Stack.Screen name='Profile' component={ProfileScreen} />
+            <Stack.Screen name='EducationInfoScreen' component={EducationInfoScreen} />
         </Stack.Navigator>
     )
 };
