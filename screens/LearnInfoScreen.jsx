@@ -22,10 +22,10 @@ const EducationInfoScreen = ({ navigation, route }) => {
 
     const handleFavoritePress = () => {
         if (isFavorite) {
-            const newFavoriteItems = favoriteItems.filter(item => item !== title_recomendation);
+            const newFavoriteItems = favoriteItems.filter(item => item !== data.title);
             setFavoriteItems(newFavoriteItems);
         } else {
-            const newFavoriteItems = [...favoriteItems, title_recomendation];
+            const newFavoriteItems = [...favoriteItems, data.title];
             setFavoriteItems(newFavoriteItems);
         }
         setIsFavorite(!isFavorite);
