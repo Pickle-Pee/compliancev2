@@ -4,14 +4,20 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { Loading } from "../components/Loading";
 import { Ionicons } from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler";
+import DropdownList from "../components/LearnInfoStructureItem";
+import LearnInfoItem from "../components/LearnInfoInfoItem";
+import RatingItem from "../components/LearnInfoRatingItem";
+import TeachersItem from "../components/LearnInfoTeachersItem";
+
 
 
 const EducationInfoScreen = ({ navigation, route }) => {
     const [data, setData] = React.useState();
-    const [isLoading, setIsLoading] = React.useState(true);
-    const { id, image, title, description } = route.params;
+    const [isLoading, setIsLoading] = useState(true);
     const [isFavorite, setIsFavorite] = useState(false);
     const [favoriteItems, setFavoriteItems] = useState([]);
+    const [activeButton, setActiveButton] = useState(null);
+    const [icons, setIcon] = useState();
 
 
     const handleFavoritePress = () => {
@@ -23,16 +29,18 @@ const EducationInfoScreen = ({ navigation, route }) => {
             setFavoriteItems(newFavoriteItems);
         }
         setIsFavorite(!isFavorite);
-        console.log(favoriteItems)
     };
 
     useEffect(() => {
         Promise.all([
-            axios.get('https://63a0636424d74f9fe836ccd4.mockapi.io/news/test/' + id)
+            axios.get('https://63a0636424d74f9fe836ccd4.mockapi.io/news/test/1'),
+            axios.get('https://63fa8edf7a045e192b5bf365.mockapi.io/api/testIcons/1')
         ])
             .then((response) => {
                 const data = response[0].data;
+                const icons = response[1].data;
                 setData(data);
+                setIcon(icons);
             })
             .catch((error) => {
                 console.log(error);
@@ -63,7 +71,7 @@ const EducationInfoScreen = ({ navigation, route }) => {
                         }
                     }}>
                     <Ionicons
-                        name="ios-arrow-back"
+                        name="chevron-back"
                         size={20}
                         color={'white'}
                     />
@@ -74,43 +82,89 @@ const EducationInfoScreen = ({ navigation, route }) => {
                     }}>Назад</Text>
                 </TouchableOpacity>
             </View>
-            <ScrollView style={styles.container}>
-                <View style={{ flexDirection: 'row', height: 100, width: '100%' }}>
-                    {data && data.image && <Image
-                        style={styles.new_image}
-                        source={{ uri: data.image }} />}
-                    <View style={{ flexDirection: 'column', flex: 1 }}>
-                        {data && data.title && <Text style={styles.h1}>{data.title}</Text>}
-                        <TouchableOpacity style={styles.recentPrice}>
-                            <Text
-                                style={{
-                                    fontSize: 16,
-                                    fontWeight: '600',
-                                    color: '#B30E1F',
-                                }}
-                            >1000 ₽</Text></TouchableOpacity>
-                    </View>
-                    <TouchableOpacity onPress={handleFavoritePress}>
-                        <Ionicons
-                            name={isFavorite ? 'heart' : 'heart-outline'}
-                            size={30}
-                            color={isFavorite ? '#B30E1F' : 'black'}
-                        />
-                    </TouchableOpacity>
+            <View style={{ flexDirection: 'row', height: 100, width: '100%', marginBottom: 20, padding: 10 }}>
+                <Image
+                    style={styles.new_image}
+                    source={{ uri: data.image }} />
+                <View style={{ flexDirection: 'column', flex: 1 }}>
+                    <Text style={styles.h1}>{data.title}</Text>
+                    <TouchableOpacity style={styles.recentPrice}>
+                        <Text
+                            style={{
+                                fontSize: 16,
+                                fontWeight: '600',
+                                color: 'white',
+                            }}
+                        >1000 ₽</Text></TouchableOpacity>
                 </View>
-                {data && data.image && <Text style={{ fontSize: 18, paddingTop: 20 }}>{data.description}</Text>}
+                <TouchableOpacity onPress={handleFavoritePress}>
+                    <Ionicons
+                        name={isFavorite ? 'heart' : 'heart-outline'}
+                        size={30}
+                        color={isFavorite ? '#B30E1F' : 'black'}
+                    />
+                </TouchableOpacity>
+            </View>
+            <View style={styles.infoRowBlock}>
+                <TouchableOpacity
+                    style={styles.rowButton}
+                    onPress={() => setActiveButton('info')}>
+                    <Text style={styles.rowText}>Инфо</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={styles.rowButton}
+                    onPress={() => setActiveButton('reviews')}>
+                    <Text>Отзывы</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={styles.rowButton}
+                    onPress={() => setActiveButton('teachers')}>
+                    <Text>Преподаватели</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={styles.rowButton}
+                    onPress={() => setActiveButton('structure')}>
+                    <Text>Структура</Text>
+                </TouchableOpacity>
+            </View>
+            <ScrollView style={{ height: 550 }} contentContainerStyle={{ flexGrow: 1 }}>
+                {activeButton === 'info' && (
+                    <View>
+                        <LearnInfoItem
+                            description={data.description}
+                            title={data.title}
+                            icon={icons.icon}
+                        />
+                    </View>
+                )}
+                {activeButton === 'reviews' && (
+                    <View>
+                        <RatingItem />
+                    </View>
+                )}
+                {activeButton === 'teachers' && (
+                    <View>
+                        <TeachersItem
+                        teachPhoto={icons.icon} />
+                    </View>
+                )}
+                {activeButton === 'structure' && (
+                    <View>
+                        <DropdownList />
+                        <DropdownList />
+                    </View>
+                )}
             </ScrollView>
         </View>
-
     )
 }
 
-// как вернуться на предыдущий экран react native
 
 const styles = StyleSheet.create({
     container: {
         padding: 10,
-        width: '100%'
+        width: '100%',
+        height: 10000
     },
 
     new_image: {
@@ -129,9 +183,8 @@ const styles = StyleSheet.create({
         paddingLeft: 10,
     },
     recentPrice: {
-        borderColor: '#B30E1F',
+        backgroundColor: '#B30E1F',
         borderRadius: 15,
-        borderWidth: '1.5',
         width: 80,
         height: 30,
         justifyContent: 'center',
@@ -139,6 +192,32 @@ const styles = StyleSheet.create({
         marginHorizontal: 10,
         marginTop: 45
     },
+    infoRowBlock: {
+        paddingTop: 10,
+        paddingBottom: 10,
+        borderTopColor: '#B30E1F',
+        borderTopWidth: '1.5',
+        borderBottomColor: '#B30E1F',
+        borderBottomWidth: '1.5',
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        width: '100%'
+    },
+    rowButton: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 5,
+    },
+    rowActiveButton: {
+        backgroundColor: '#B30E1F',
+        borderRadius: 10
+    },
+    rowActiveText: {
+        color: 'white'
+    },
+    rowText: {
+        color: 'black'
+    }
 })
 
 export default EducationInfoScreen;
