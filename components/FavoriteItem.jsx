@@ -4,50 +4,62 @@ import {
     View,
     TouchableOpacity,
     Text
-  } from 'react-native';
-  import { Ionicons } from '@expo/vector-icons';
-  import React, { useState } from 'react';
-  
-  
-  export const FavoriteItem = ({ image_recomendation, title_recomendation, description_recomendation, navigation }) => {
-    const [isFavorite, setIsFavorite] = useState(false);
-    const [favoriteItems, setFavoriteItems] = useState([]);
-  
-  
-    const handleFavoritePress = () => {
-        if (isFavorite) {
-            const newFavoriteItems = favoriteItems.filter(item => item !== title_recomendation);
-            setFavoriteItems(newFavoriteItems);
-        } else {
-            const newFavoriteItems = [...favoriteItems, title_recomendation];
-            setFavoriteItems(newFavoriteItems);
+} from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import React, { useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+
+export const FavoriteItem = ({ image, title, description, navigation }) => {
+    const [favorites, setFavorites] = useState(false);
+
+    const removeFromFavorites = async (item) => {
+        try {
+            // Получаем текущий список избранных элементов из AsyncStorage
+            const favorites = await AsyncStorage.getItem('favorites');
+            let favoritesArray = [];
+
+            // Если список не пустой, парсим его из JSON в массив
+            if (favorites !== null) {
+                favoritesArray = JSON.parse(favorites);
+            }
+            const newFavorites = favoritesArray.filter((favorite) => favorite.id !== item.id);
+            setFavorites(newFavorites);
+            // Сохраняем обновленный список избранных элементов в AsyncStorage
+            await AsyncStorage.setItem('favorites', JSON.stringify(favoritesArray));
+
+            // Обновляем состояние isFavorite
+            setFavorites(!favorites);
+        } catch (e) {
+            console.error(e);
         }
-        setIsFavorite(!isFavorite);
-        console.log(favoriteItems)
+
+        console.log(favorites)
     };
+
     return (
         <View style={styles.container} >
             <View style={{ flexDirection: 'row', height: 100, margin: 15 }}>
                 <Image
                     style={styles.card_image}
-                    source={{ uri: image_recomendation }} />
-                <Text style={styles.h1}>{title_recomendation}</Text>
-                <TouchableOpacity onPress={handleFavoritePress}>
+                    source={{ uri: image }} />
+                <Text style={styles.h1}>{title}</Text>
+                <TouchableOpacity onPress={removeFromFavorites}>
                     <Ionicons
-                        name={isFavorite ? 'heart' : 'heart-outline'}
+                        name={favorites ? 'heart-outline' : 'heart'}
                         size={30}
-                        color={isFavorite ? '#B30E1F' : 'black'}
+                        color={favorites ? 'black' : '#B30E1F'}
                     />
                 </TouchableOpacity>
             </View>
-            <View style={{ flexDirection: 'row'}}>
-                <Text style={styles.recentDescription}>{description_recomendation}</Text>
+            <View style={{ flexDirection: 'row' }}>
+                <Text style={styles.recentDescription}>{description}</Text>
             </View>
         </View>
     );
-  }
-  
-  const styles = StyleSheet.create({
+}
+
+const styles = StyleSheet.create({
     container: {
         backgroundColor: '#fff',
         width: '95%',
@@ -86,4 +98,4 @@ import {
         paddingHorizontal: 15,
         fontWeight: '400'
     }
-  })
+})

@@ -44,10 +44,10 @@ export const EducationsScreen = ({ navigation }) => {
                 {recomendationData.map((item, index) => (
                     <TouchableOpacity key={index} onPress={() => navigation.navigate('EducationInfoScreen', { id: item.id })}>
                         <EducationItem
-                            image_recomendation={item.image_recomendation}
-                            title_recomendation={item.title_recomendation}
-                            price_recomendation={item.price_recomendation}
-                            description_recomendation={item.description_recomendation}
+                            image={item.image_recomendation}
+                            title={item.title_recomendation}
+                            price={item.price_recomendation}
+                            description={item.description_recomendation}
                         />
                     </TouchableOpacity>
                 ))}

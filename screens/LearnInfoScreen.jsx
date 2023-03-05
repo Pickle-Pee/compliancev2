@@ -9,8 +9,6 @@ import LearnInfoItem from "../components/LearnInfoInfoItem";
 import RatingItem from "../components/LearnInfoRatingItem";
 import TeachersItem from "../components/LearnInfoTeachersItem";
 
-
-
 const EducationInfoScreen = ({ navigation, route }) => {
     const [data, setData] = React.useState();
     const [isLoading, setIsLoading] = useState(true);
