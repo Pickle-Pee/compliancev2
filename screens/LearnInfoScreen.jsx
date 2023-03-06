@@ -8,26 +8,47 @@ import DropdownList from "../components/LearnInfoStructureItem";
 import LearnInfoItem from "../components/LearnInfoInfoItem";
 import RatingItem from "../components/LearnInfoRatingItem";
 import TeachersItem from "../components/LearnInfoTeachersItem";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const EducationInfoScreen = ({ navigation, route }) => {
     const [data, setData] = React.useState();
     const [isLoading, setIsLoading] = useState(true);
     const [isFavorite, setIsFavorite] = useState(false);
     const [favoriteItems, setFavoriteItems] = useState([]);
-    const [activeButton, setActiveButton] = useState(null);
+    const [activeButton, setActiveButton] = useState('info');
     const [icons, setIcon] = useState();
 
 
-    const handleFavoritePress = () => {
-        if (isFavorite) {
-            const newFavoriteItems = favoriteItems.filter(item => item !== data.title);
-            setFavoriteItems(newFavoriteItems);
-        } else {
-            const newFavoriteItems = [...favoriteItems, data.title];
-            setFavoriteItems(newFavoriteItems);
-        }
-        setIsFavorite(!isFavorite);
-    };
+  const handleFavorite = async () => {
+    try {
+      // Получаем текущий список избранных элементов из AsyncStorage
+      const favorites = await AsyncStorage.getItem('favorites');
+      let favoritesArray = [];
+
+      // Если список не пустой, парсим его из JSON в массив
+      if (favorites !== null) {
+        favoritesArray = JSON.parse(favorites);
+        console.log(favorites)
+      }
+
+      if (!isFavorite) {
+        // Добавляем текущий элемент в список избранных
+        favoritesArray.push({ title, description });
+      } else {
+        // Удаляем текущий элемент из списка избранных
+        const index = favoritesArray.findIndex((item) => item.title === title && item.description === description);
+        favoritesArray.splice(index, 1);
+      }
+
+      // Сохраняем обновленный список избранных элементов в AsyncStorage
+      await AsyncStorage.setItem('favorites', JSON.stringify(favoritesArray));
+
+      // Обновляем состояние isFavorite
+      setIsFavorite(isFavorite);
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
     useEffect(() => {
         Promise.all([
@@ -95,7 +116,7 @@ const EducationInfoScreen = ({ navigation, route }) => {
                             }}
                         >1000 ₽</Text></TouchableOpacity>
                 </View>
-                <TouchableOpacity onPress={handleFavoritePress}>
+                <TouchableOpacity onPress={handleFavorite}>
                     <Ionicons
                         name={isFavorite ? 'heart' : 'heart-outline'}
                         size={30}

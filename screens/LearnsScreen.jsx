@@ -3,8 +3,9 @@ import {
     View,
     TouchableOpacity,
     ScrollView,
+    Text
 } from 'react-native';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { EducationItem } from '../components/LearnItem';
 import { Loading } from '../components/Loading';
@@ -13,6 +14,7 @@ import { Loading } from '../components/Loading';
 export const EducationsScreen = ({ navigation }) => {
     const [isLoading, setIsLoading] = React.useState(true);
     const [recomendationData, setRecomendationData] = React.useState([]);
+    const [activeButton, setActiveButton] = useState('allCourses');
 
     useEffect(() => {
         Promise.all([
@@ -37,7 +39,19 @@ export const EducationsScreen = ({ navigation }) => {
     }
 
     return (
-        <View style={styles.container} >
+        <View >
+            <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
+                <TouchableOpacity
+                    style={styles.rowButton}
+                    onPress={() => setActiveButton('myCourses')}>
+                    <Text style={styles.rowText}>Все курсы</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={styles.rowButton}
+                    onPress={() => setActiveButton('allCourses')}>
+                    <Text style={styles.rowText}>Мои курсы</Text>
+                </TouchableOpacity>
+            </View>
             <ScrollView
                 horizontal={false}
                 showsHorizontalScrollIndicator={false}>
@@ -84,5 +98,13 @@ const styles = StyleSheet.create({
         width: '70%',
         paddingLeft: 15,
         fontWeight: '400'
+    },
+    rowButton: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingTop: 5,
+    },
+    rowText: {
+        fontSize: 16
     }
 })
